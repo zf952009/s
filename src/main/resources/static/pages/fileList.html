@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>fileList</title>
+</head>
+<body>
+<h1>this is fileList web</h1>
+
+<div class="layui-container"
+     style="margin-top: 10px;margin-bottom:50px;width: 100%; border: 1px #F6F6F6 solid;background-color: #ffffff">
+    <h4 id="count" style="color: red"></h4>
+
+    <table class="layui-table" lay-even="" lay-skin="row">
+        <colgroup>
+            <col width="60"/>
+            <col width="100"/>
+            <col width="50"/>
+
+        </colgroup>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>url</th>
+            <th>更新时间</th>
+        </tr>
+
+        </thead>
+
+        <tbody id="boby">
+
+        </tbody>
+    </table>
+</div>
+</body>
+
+
+<link rel="stylesheet" charset="UTF-8" href="/layui/css/layui.css"/>
+<link rel="stylesheet" href="/layui/css/layui.mobile.css"/>
+
+<script charset="UTF-8" rel="script" src="/layui/layui.js"></script>
+
+<script>
+    layui.use(['jquery'], function () {
+        var $ = layui.jquery;
+        $(document).ready(function () {
+            $.ajax({
+                url: "/table1/fileList",
+                type: "post",
+                dataType: "json",
+                success: function (messge) {
+                    $("#count").html(messge.length);
+                    for (var i = 0; i < messge.length; i++) {
+                        var data = messge[i];
+                        console.log(data);
+                        $("#boby").append("<tr>" +
+                            "<td>  " + data.id + "</td>" +
+                            "<td> <a href='"+data.url+"' target='_blank'>" + data.name + "</a></td>" +
+                            "<td>  " + data.updata_time + "</td>" +
+                            "</tr>");
+                    }
+                    console.log(messge);
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>table1List</title>
+
+</head>
+<body>
+<h1>this is table1List web</h1>
+
+<div class="layui-container"
+     style="margin-top: 10px;margin-bottom:50px;width: 100%; border: 1px #F6F6F6 solid;background-color: #ffffff">
+    <h4 id="count" style="color: red"></h4>
+
+    <table class="layui-table" lay-even="" lay-skin="row">
+        <colgroup>
+            <col width="60"/>
+            <col width="50"/>
+            <col width="100"/>
+            <col width="100"/>
+
+        </colgroup>
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>lastName</th>
+            <th>gender</th>
+            <th>email</th>
+        </tr>
+
+        </thead>
+
+        <tbody id="boby">
+
+        </tbody>
+    </table>
+</div>
+</body>
+
+
+<link rel="stylesheet" charset="UTF-8" href="/layui/css/layui.css"/>
+<link rel="stylesheet" href="/layui/css/layui.mobile.css"/>
+
+<script charset="UTF-8" rel="script" src="/layui/layui.js"></script>
+
+<script>
+    layui.use(['jquery'], function () {
+        var $ = layui.jquery;
+        $(document).ready(function () {
+            $.ajax({
+                url: "/table1/doTable1List",
+                type: "post",
+                dataType: "json",
+                success: function (messge) {
+                    $("#count").html(messge.length);
+                    for (var i = 0; i < messge.length; i++) {
+                        var data = messge[i];
+                        console.log(data);
+                        $("#boby").append("<tr>" +
+                            "<td>  " + data.id + "</td>" +
+                            "<td>  " + data.lastName + "</td>" +
+                            "<td>  " + data.gender + "</td>" +
+                            "<td>  " + data.email + "</td>" +
+                            "</tr>");
+                    }
+                    console.log(messge);
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+        });
+    });
+</script>
+</html>
